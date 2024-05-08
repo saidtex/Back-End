@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const blogSchema = new mongoose.Schema({
+const partnerSchema = new mongoose.Schema({
   link: {type: String, required: true},
   image1: { type: String, required: true },
   image2: { type: String, required: true },
@@ -11,6 +11,6 @@ const blogSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
-const Blog = mongoose.model('Blog', blogSchema);
+const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = Blog;
+module.exports = Partner;

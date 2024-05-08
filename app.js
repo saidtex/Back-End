@@ -9,7 +9,7 @@ const port = process.env.PORT;
 
 const middlewareLog = require('./middlewares/middleware');
 
-const BlogRoute = require('./routes/blogRoutes')
+const PartnerRoute = require('./routes/partnerRoutes')
 const LoginRoute = require('./routes/loginRoutes')
 
 
@@ -24,7 +24,7 @@ app.use(express.json());
 
 app.use(middlewareLog);
 
-app.use("/blogs",BlogRoute);
+app.use("/partners",PartnerRoute);
 app.use("/login",LoginRoute);
 
 app.listen(port, () => {
