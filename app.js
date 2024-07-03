@@ -16,7 +16,11 @@ const LoginRoute = require('./routes/loginRoutes')
 const app = express();
 app.use(cors());
 
-mongoose.connect(url)
+mongoose.connect(url,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 50000,
+})
   .then(() => console.log("Connected to database"))
   .catch((error) => console.log("Error: ", error));
 
