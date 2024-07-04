@@ -5,29 +5,28 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const middlewareLog = require('./middlewares/middleware');
-
-const PartnerRoute = require('./routes/partnerRoutes')
-const LoginRoute = require('./routes/loginRoutes')
+const PartnerRoute = require('./routes/partnerRoutes');
+const LoginRoute = require('./routes/loginRoutes');
 
 const app = express();
 app.use(cors());
 
 const data_base = process.env.URL;
-mongoose.connect(data_base)
-    .then(()=>{
-        console.log('Successfully connected');
+mongoose.connect(data_base, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Successfully connected to MongoDB');
     })
-    .catch(error=>{
-        console.log('Connection error', error);
-    })
+    .catch(error => {
+        console.error('Connection error:', error.message);
+    });
 
 app.use(express.json());
-
 app.use(middlewareLog);
 
-app.use("/partners",PartnerRoute);
-app.use("/login",LoginRoute);
+app.use("/partners", PartnerRoute);
+app.use("/login", LoginRoute);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
