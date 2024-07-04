@@ -7,17 +7,11 @@ const middlewareLog = require('./middlewares/middleware');
 const PartnerRoute = require('./routes/partnerRoutes');
 const LoginRoute = require('./routes/loginRoutes');
 
+require("./Config/db");
+
 const app = express();
 
 app.use(cors); 
-
-mongoose.connect(process.env.URL)
-.then(() => {
-    console.log('Successfully connected to MongoDB');
-})
-.catch(error => {
-    console.error('Connection error:', error.message);
-});
 
 app.use(express.json());
 app.use(middlewareLog);
