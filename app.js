@@ -19,8 +19,7 @@ app.use(cors(corsOptions)); // Enable CORS with custom options
 
 // MongoDB Connection
 mongoose.connect(process.env.URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
 })
 .then(() => {
     console.log('Successfully connected to MongoDB');
