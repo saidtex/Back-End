@@ -9,10 +9,13 @@ const LoginRoute = require('./routes/loginRoutes');
 
 const app = express();
 
-// Middleware
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Parse JSON bodies
-app.use(middlewareLog); // Custom middleware for logging
+const corsOptions = {
+    origin: 'https://www.saidtex.ma', // Replace with your actual domain
+    methods: ['GET', 'POST'], // Specify allowed HTTP methods
+    allowedHeaders: ['Content-Type'], // Specify allowed headers
+};
+
+app.use(cors(corsOptions)); // Enable CORS with custom options
 
 // MongoDB Connection
 mongoose.connect(process.env.URL, {
@@ -26,11 +29,12 @@ mongoose.connect(process.env.URL, {
     console.error('Connection error:', error.message);
 });
 
-// Routes
-app.use("/partners", PartnerRoute); // Example route for partners
-app.use("/login", LoginRoute); // Example route for login
+app.use(express.json());
+app.use(middlewareLog);
 
-// Server setup
+app.use("/partners", PartnerRoute);
+app.use("/login", LoginRoute);
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
