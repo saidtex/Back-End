@@ -18,13 +18,25 @@ app.use(cors());
 
 mongoose.connect(url,{
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-   serverSelectionTimeoutMS: 50000,
-  socketTimeoutMS: 60000, 
-})
-  .then(() => console.log("Connected to database"))
-  .catch((error) => console.log("Error: ", error));
-
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 50000, // Increased timeout value
+    socketTimeoutMS: 60000,         // Increased timeout value
+    poolSize: 10,                   // Connection pool size
+    reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+    reconnectInterval: 500,         // Reconnect every 500ms
+  }).then(() => {
+    console.log('MongoDB is connected');
+  }).catch((error) => {
+    console.error(`MongoDB connection unsuccessful (attempt ${++connectionAttempts}), retrying in 5 seconds...`, error);
+    if (connectionAttempts < maxRetries) {
+      setTimeout(connectWithRetry, 5000);
+    } else {
+      console.error('Max retries reached. Exiting...');
+      process.exit(1);
+    }
+  });
+};
+connectWithRetry();
 app.use(express.json());
 
 app.use(middlewareLog);
