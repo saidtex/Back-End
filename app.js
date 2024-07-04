@@ -11,8 +11,7 @@ const LoginRoute = require('./routes/loginRoutes');
 const app = express();
 app.use(cors());
 
-const data_base = process.env.URL;
-mongoose.connect(data_base, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.URL)
     .then(() => {
         console.log('Successfully connected to MongoDB');
     })
