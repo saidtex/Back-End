@@ -34,4 +34,4 @@ app.use(middlewareLog);
 app.use("/partners", PartnerRoute);
 app.use("/login", LoginRoute);
 
-module.exports = app; use async await with my connection
+module.exports = app;
