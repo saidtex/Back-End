@@ -24,8 +24,7 @@ const connectToDatabase = async () => {
     console.log("Connected to database");
   } catch (error) {
     console.error("Error connecting to database: ", error);
-    // Exit the process if unable to connect to MongoDB
-    process.exit(1);
+    throw error; // Throw error to handle in startServer function
   }
 };
 
@@ -39,13 +38,16 @@ const startServer = async () => {
     });
   } catch (error) {
     console.error("Error starting server: ", error);
-    // Exit the process if there's an error starting the server
-    process.exit(1);
+    throw error; // Throw error to handle further up
   }
 };
 
 // Call the function to start server and connect to MongoDB
-startServer();
+startServer()
+  .catch(error => {
+    console.error("Error in application: ", error);
+    process.exit(1); // Exit with non-zero code to indicate failure
+  });
 
 // Middleware for logging
 app.use(middlewareLog);
@@ -55,3 +57,4 @@ app.use("/partners", PartnerRoute);
 app.use("/login", LoginRoute);
 
 module.exports = app;
+
