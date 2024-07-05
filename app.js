@@ -1,4 +1,4 @@
-const express = require('express');
+ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -14,39 +14,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Async function to connect to MongoDB
-const connectToDatabase = async () => {
-  try {
-    await mongoose.connect(url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
     console.log("Connected to database");
-  } catch (error) {
-    console.error("Error connecting to database: ", error);
-    throw error; // Throw error to handle in startServer function
-  }
-};
-
-// Connect to MongoDB and start server
-const startServer = async () => {
-  try {
-    await connectToDatabase();
+    
     // Start listening once connected
     app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
+      console.log(Server is running on port ${port});
     });
-  } catch (error) {
-    console.error("Error starting server: ", error);
-    throw error; // Throw error to handle further up
-  }
-};
-
-// Call the function to start server and connect to MongoDB
-startServer()
-  .catch(error => {
-    console.error("Error in application: ", error);
-    process.exit(1); // Exit with non-zero code to indicate failure
+  })
+  .catch((error) => {
+    console.error("Error connecting to database: ", error);
   });
 
 // Middleware for logging
@@ -56,5 +34,4 @@ app.use(middlewareLog);
 app.use("/partners", PartnerRoute);
 app.use("/login", LoginRoute);
 
-module.exports = app;
-
+module.exports = app; use async await with my connection
