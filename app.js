@@ -13,6 +13,9 @@ const LoginRoute = require('./routes/loginRoutes');
 const app = express();
 
 // Middleware
+app.use(cors({
+    origin: 'https://saidtex.ma'
+}));
 app.use(cors());
 app.use(express.json());
 app.use(middlewareLog); // Logging middleware
